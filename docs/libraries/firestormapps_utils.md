@@ -5,15 +5,31 @@ title: FirestormApps Utils
 
 A biblioteca [FirestormApps Utils](https://gitlab.com/firestormapps/packages/firestormapps-utils) tem como objetivo expor funções utilitárias, que podem ser utilizadas entre todos os nossos projetos. Essa lib é compatível com qualquer projeto NodeJS, sendo possível instalá-la tanto no *backend*, quanto no *frontend* (Ex. Ant Design Pro, React Native, etc).
 
+**NOTA**:
+
+Essa biblioteca expoe algumas funções diretamente do projeto [brazilian-utils](https://brazilian-utils.com.br/#/) (versão atual `^1.0.0-rc.12`). 
+
+As seguintes funções do `brazilian-utils` são expostas:
+
+- isValidBoleto
+- formatBoleto
+- isValidCEP
+- formatCEP
+- isValidCNPJ
+- formatCNPJ
+- isValidCPF
+- formatCPF
+- isValidPIS
+- isValidEmail
+
 ## Instalação
 
-A biblioteca está publicada no NPM, então para adicioná-la ao projeto, basta executar o comando:
 
 ```
 npm i @firestormapps/utils
 ```
 
-ou, caso esteja usando `yarn`, execute o comando
+ou
 
 ```
 yarn add @firestormapps/utils
@@ -21,44 +37,108 @@ yarn add @firestormapps/utils
 
 ____
 
-## Métodos
+## Helpers
 
+### Boleto
 
-### validateCPF
+#### isValidBoleto
 
-Retorna um `boolean` se o CPF informado é válido ou não.
+Retorna um `boolean` se o número de boleto informado é válido ou não.
 
 ```javascript
-import { validateCPF } from '@firestormapps/utils';
 
-validateCPF('03455455787'); // true/false
+import { isValidBoleto } from '@firestormapps/utils';
+
+isValidBoleto('00190000090114971860168524522114675860000102656'); // true
 
 ```
 
-### maskCPF
+#### formatBoleto
 
-Adicionar máscara ao número de CPF informado.
-
+Adiciona a máscara com pontuação ao número de boleto informado.
 
 ```javascript
-import { maskCPF } from '@firestormapps/utils';
 
-maskCPF('28832326280'); // 288.323.262-80
+import { formatBoleto } from '@firestormapps/utils';
+
+formatBoleto('00190000090114971860168524522114675860000102656');
 
 ```
 
-### unmaskCPF
+### Strings
+#### capitalize
 
-Remove a máscara do número de CPF informado, retornando apenas os números.
+Torna maiúscula apenas a primeira letra de cada palavra da frase informada.
 
 
 ```javascript
-import { unmaskCPF } from '@firestormapps/utils';
+import { capitalize } from '@firestormapps/utils';
 
-unmaskCPF('288.323.262-80'); // 28832326280
+capitalize("Apenas pra gente TESTAR"); // Apenas Pra Gente Testar
 
 ```
 
+### getNameInitials
+
+Retorna uma `string` com as letras iniciais do nome informado
+
+```javascript
+import { getNameInitials } from '@firestormapps/utils';
+
+getNameInitials('Bora testar'); // BT
+
+```
+
+
+____
+
+### CEP
+
+#### isValidCEP
+
+Retorna um `boolean` se o CEP informado é válido ou não.
+
+```javascript
+import { isValidCEP } from '@firestormapps/utils';
+
+isValidCEP('92500000'); // true
+
+```
+
+#### formatCEP
+
+Adicionar máscara ao número de CEP informado.
+
+```javascript
+import { formatCEP } from '@firestormapps/utils';
+
+formatCEP('92500000'); // 92500-000
+
+```
+
+### CNPJ
+
+#### isValidCNPJ
+
+Retorna um `boolean` se o CNPJ informado é válido ou não.
+
+```javascript
+import { isValidCNPJ } from '@firestormapps/utils';
+
+isValidCNPJ('15515147234255'); // true/false
+
+```
+
+#### formatCNPJ
+
+Adicionar máscara ao número de CNPJ informado.
+
+```javascript
+import { formatCNPJ } from '@firestormapps/utils';
+
+formatCNPJ('245222000174'); // 24.522.200/0174
+
+```
 ### validateCNPJ
 
 Retorna um `boolean` se o CNPJ informado é válido ou não.
@@ -94,37 +174,121 @@ unmaskCNPJ('17.702.663/0001-50'); // 17702663000150
 
 ```
 
+### CPF
 
-### validateCCNumber
+#### isValidCPF
+
+Retorna um `boolean` se o CPF informado é válido ou não.
+
+```javascript
+import { isValidCPF } from '@firestormapps/utils';
+
+isValidCPF('155151475'); // true/false
+
+```
+
+#### formatCPF
+
+Adicionar máscara ao número de CPF informado.
+
+```javascript
+import { formatCPF } from '@firestormapps/utils';
+
+formatCPF('746506880'); // 746.506.880
+
+```
+
+#### maskCPF
+
+Adicionar máscara ao número de CPF informado.
+
+
+```javascript
+import { maskCPF } from '@firestormapps/utils';
+
+maskCPF('28832326280'); // 288.323.262-80
+
+```
+
+#### unmaskCPF
+
+Remove a máscara do número de CPF informado, retornando apenas os números.
+
+
+```javascript
+import { unmaskCPF } from '@firestormapps/utils';
+
+unmaskCPF('288.323.262-80'); // 28832326280
+
+```
+
+#### validateCPF
+
+Retorna um `boolean` se o CPF informado é válido ou não.
+
+```javascript
+import { validateCPF } from '@firestormapps/utils';
+
+validateCPF('03455455787'); // true/false
+
+```
+
+### Cartão de Crédito
+
+#### validateCreditCardNumber
 
 Retorna um `boolean` se o número de cartão de crédito informado é válido ou não.
 
 ```javascript
-import { validateCCNumber } from '@firestormapps/utils';
+import { validateCreditCardNumber } from '@firestormapps/utils';
 
-validateCCNumber('5598928852411791'); // true/false
+validateCreditCardNumber('5598928852411791'); // true/false
 
 ```
 
-### validateCCExpiry
+#### validateCreditCardExpiration
 
 Retorna um `boolean` se a data de expiração do cartão de crédito informado é válido ou não.
 
 ```javascript
-import { validateCCExpiry } from '@firestormapps/utils';
+import { validateCreditCardExpiration } from '@firestormapps/utils';
 
-validateCCExpiry('12/22'); // true/false
+validateCreditCardExpiration('12/22'); // true/false
 
 ```
 
-### getCCNumberInfo
+#### getCardBrand
+
+Retorna uma `string` com a bandeira do cartão através do número informado (`cardNumber`). Os possíveis retornos são:
+
+- `Elo`,
+- `HiperCard`,
+- `Visa`,
+- `MasterCard`,
+- `JCB`,
+- `Diners Club`,
+- `Discover`,
+- `American Express`.
+
+```javascript
+import { getCardBrand } from '@firestormapps/utils';
+
+getCardBrand('5284929298198314'); 
+
+/*
+retorna: "MasterCard"
+*/
+
+```
+
+#### getCreditCardInfo
 
 Retorna um `object` com informações sobre o número de cartão de crédito informado.
 
 ```javascript
-import { getCCNumberInfo } from '@firestormapps/utils';
+import { getCreditCardInfo } from '@firestormapps/utils';
 
-getCCNumberInfo('5485775006283622'); 
+getCreditCardInfo('5485775006283622'); 
 
 /*
 retorna:
@@ -146,19 +310,21 @@ retorna:
 
 ```
 
-### initials
+### E-mail
 
-Retorna uma `string` com as letras iniciais do nome informado
+### isValidEmail
+
+Retorna um `boolean` se o CPF informado é válido ou não.
 
 ```javascript
-import { initials } from '@firestormapps/utils';
+import { isValidEmail } from '@firestormapps/utils';
 
-initials('FirestormApps apps'); // LA
-
+isValidEmail('john.doe@hotmail.com'); // true
 ```
 
+### Telefone
 
-### validatePhone
+#### validatePhone
 
 Retorna um `boolean` se o número de telefone informado é válido ou não.
 
@@ -169,7 +335,7 @@ validatePhone('(11) 99989-8887'); // true/false
 
 ```
 
-### maskPhone
+#### maskPhone
 
 Adicionar máscara ao número de telefone informado.
 
@@ -181,7 +347,7 @@ maskPhone('11999898887'); // (11) 99989-8887
 
 ```
 
-### unmaskPhone
+#### unmaskPhone
 
 Remove a máscara do número de telefone informado, retornando apenas os números.
 
@@ -193,119 +359,9 @@ unmaskPhone('(11) 99989-8887'); // 11999898887
 
 ```
 
-### capitalize
+### PIS
 
-Torna maiúscula apenas a primeira letra de cada palavra da frase informada.
-
-
-```javascript
-import { capitalize } from '@firestormapps/utils';
-
-capitalize("Firestorm Apps"); // FirestormApps - Criamos Apps Incriveis
-
-```
-
-____
-
-## Brazilian utils
-
-
-Nossa lib `FirestormApps Utils` expoe algumas funções diretamente da biblioteca [brazilian-utils](https://brazilian-utils.com.br/#/).
-
-São elas:
-
-
-### isValidBoleto
-
-Retorna um `boolean` se o número de boleto informado é válido ou não.
-
-```javascript
-
-import { isValidBoleto } from '@firestormapps/utils';
-
-isValidBoleto('00190000090114971860168524522114675860000102656'); // true
-
-```
-
-### formatBoleto
-
-Adiciona a máscara com pontuação ao número de boleto informado.
-
-```javascript
-
-import { formatBoleto } from '@firestormapps/utils';
-
-formatBoleto('00190000090114971860168524522114675860000102656');
-
-```
-
-### isValidCEP
-
-Retorna um `boolean` se o CEP informado é válido ou não.
-
-```javascript
-import { isValidCEP } from '@firestormapps/utils';
-
-isValidCEP('92500000'); // true
-
-```
-
-### formatCEP
-
-Adicionar máscara ao número de CEP informado.
-
-```javascript
-import { formatCEP } from '@firestormapps/utils';
-
-formatCEP('92500000'); // 92500-000
-
-```
-
-### isValidCNPJ
-
-Retorna um `boolean` se o CNPJ informado é válido ou não.
-
-```javascript
-import { isValidCNPJ } from '@firestormapps/utils';
-
-isValidCNPJ('15515147234255'); // true/false
-
-```
-
-### formatCNPJ
-
-Adicionar máscara ao número de CNPJ informado.
-
-```javascript
-import { formatCNPJ } from '@firestormapps/utils';
-
-formatCNPJ('245222000174'); // 24.522.200/0174
-
-```
-
-### isValidCPF
-
-Retorna um `boolean` se o CPF informado é válido ou não.
-
-```javascript
-import { isValidCPF } from '@firestormapps/utils';
-
-isValidCPF('155151475'); // true/false
-
-```
-
-### formatCPF
-
-Adicionar máscara ao número de CPF informado.
-
-```javascript
-import { formatCPF } from '@firestormapps/utils';
-
-formatCPF('746506880'); // 746.506.880
-
-```
-
-### isValidPIS
+#### isValidPIS
 
 Retorna um `boolean` se o CPF informado é válido ou não.
 
@@ -313,17 +369,5 @@ Retorna um `boolean` se o CPF informado é válido ou não.
 import { isValidPIS } from '@firestormapps/utils';
 
 isValidPIS('12056412547'); // true/false
-
-```
-
-### isValidEmail
-
-Retorna um `boolean` se o CPF informado é válido ou não.
-
-```javascript
-import { isValidEmail } from '@firestormapps/utils';
-
-isValidEmail('john.doe@hotmail.com'); // true
-
 
 ```

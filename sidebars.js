@@ -11,6 +11,6 @@ module.exports = {
     Bibliotecas: [
       "libraries/firestormapps_utils",
     ],
-    Extras: ["others/doc1"],
+    Outros: ["others/bats"],
   },
 };

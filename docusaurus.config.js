@@ -1,7 +1,7 @@
 module.exports = {
   title: 'FirestormApps Docs',
   tagline: 'Documentação dos projetos internos da FirestormApps',
-  url: 'https://FirestormApps.gitlab.io/',
+  url: 'https://firestormapps-docs.netlify.app/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -76,13 +76,13 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           editUrl:
-            'https://gitlab.com/FirestormApps//-/tree/master/docs',
+            'https://github.com/firestormapps/docs/blob/main',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://gitlab.com/FirestormApps//-/tree/master/blog',
+            'https://github.com/firestormapps/docs/blob/main',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

@@ -4,12 +4,11 @@ module.exports = {
       "documentation/doc1",
       "documentation/doc2",
     ],
-    Frontend: ["frontend/doc1"],
-    Backend: [],
-    Mobile: ["mobile/doc1"],
-    Design: ["design/doc1"],
     Bibliotecas: [
       "libraries/firestormapps_utils",
+    ],
+    VPS: [
+      "vps/vps_settings",
     ],
     Outros: ["others/bats"],
   },

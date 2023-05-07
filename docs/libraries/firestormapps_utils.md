@@ -3,7 +3,7 @@ id: firestormapps_utils
 title: FirestormApps Utils
 ---
 
-A biblioteca [FirestormApps Utils](https://github.com/firestormapps/docs) tem como objetivo expor funções utilitárias, que podem ser utilizadas entre todos os nossos projetos. Essa lib é compatível com qualquer projeto NodeJS, sendo possível instalá-la tanto no *backend*, quanto no *frontend* (Ex. Ant Design Pro, React Native, etc).
+A biblioteca [FirestormApps Utils](https://www.npmjs.com/package/@firestormapps/utils) tem como objetivo expor funções utilitárias, que podem ser utilizadas entre todos os nossos projetos. Essa lib é compatível com qualquer projeto NodeJS, sendo possível instalá-la tanto no *backend*, quanto no *frontend* (Ex. Ant Design Pro, React Native, etc).
 
 **NOTA**:
 

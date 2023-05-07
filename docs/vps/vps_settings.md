@@ -491,6 +491,77 @@ dev
 sudo systemctl restart vsftpd.service
 ```
 
+Mais detalhes no link: https://phoenixnap.com/kb/install-ftp-server-on-ubuntu-vsftpd
+
+## Instalar Desktop Environment
+
+```
+sudo apt update
+```
+
+```
+apt install tasksel -y
+```
+
+```
+sudo tasksel
+```
+
+```
+sudo systemctl set-default graphical.target
+```
+
+Instale o Ubuntu Desktop (ou Gnome Desktop Environment)
+
+## Configure acesso remoto
+
+1. Atualize as dependências do Ubuntu
+
+```
+sudo apt update && sudo apt upgrade
+```
+
+2. Instale o XRDP
+
+```
+sudo apt install xrdp -y
+```
+
+3. Verifique se o serviço está rodando corretamente
+
+```
+sudo systemctl status xrdp
+```
+
+4. Um novo usuário `xrdp` é adicionado automaticamente ao instalar o XRDP. Adicione este usuário ao grupo `ssl-cert` para que a configuração funcione corretamente:
+
+```
+sudo usermod -a -G ssl-cert xrdp
+```
+
+5. Adicione a seguinte configuração ao arquivo `sudo nano /etc/xrdp/startwm.sh`, após o `fi` e antes da linha `test -x /etc`
+
+```
+
+unset DBUS_SESSION_BUS_ADDRESS
+unset XDG_RUNTIME_DIR
+
+```
+
+6. Reinicie o serviço
+
+```
+sudo systemctl restart xrdp
+```
+
+Mais detalhes no link: https://tecadmin.net/how-to-install-xrdp-on-ubuntu-20-04/
+
+## Instalar o Docker
+
+Siga as instruções da [documentação oficial](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) para instalação do Docker Engine.
+
+**NOTA**: Na VPS de 2GB não é possível rodar o Docker Desktop
+
 ____
 
 Documentação baseada no README do projeto [restaurant-api](https://github.com/firestormapps/restaurant-api/blob/main/README.md)

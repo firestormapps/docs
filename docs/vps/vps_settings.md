@@ -314,6 +314,22 @@ e
 sudo systemctl enable nginx
 ```
 
+### Permitir sudo sem senha para reiniciar o serviço
+
+1. Crie o arquivo para execução de comandos sudo sem senha:
+
+```
+sudo nano /etc/sudoers.d/dev
+```
+
+2. Cole o conteúdo
+
+```
+dev ALL=(ALL) NOPASSWD: /usr/sbin/service nginx start,/usr/sbin/service nginx stop,/usr/sbin/service nginx restart
+```
+
+Isso permite que sejamos capazes de reiniciar o nginx via Node, por exemplo.
+
 ## Configurando HTTPS (SSL)
 
 1. Instalar as dependências do cert bot

@@ -314,7 +314,7 @@ e
 sudo systemctl enable nginx
 ```
 
-### Permitir sudo sem senha para reiniciar o serviço
+### Permitir sudo sem senha para reiniciar o serviço via Node
 
 1. Crie o arquivo para execução de comandos sudo sem senha:
 
@@ -328,7 +328,17 @@ sudo nano /etc/sudoers.d/dev
 dev ALL=(ALL) NOPASSWD: /usr/sbin/service nginx start,/usr/sbin/service nginx stop,/usr/sbin/service nginx restart
 ```
 
-Isso permite que sejamos capazes de reiniciar o nginx via Node, por exemplo.
+3. Garanta que o arquivo só possa alterado via root:
+
+```
+sudo chmod 0440 /etc/sudoers.d/dev
+```
+
+4. Altere o usuário dono dos arquivos do nginx para que o Node (sendo executado a partir do usuário `dev`) seja capaz de reescrever esses arquivos:
+
+```
+sudo chown -R dev:dev /etc/nginx/sites-available
+```
 
 ## Configurando HTTPS (SSL)
 

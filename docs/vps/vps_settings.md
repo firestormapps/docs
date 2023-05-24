@@ -588,6 +588,32 @@ Siga as instruções da [documentação oficial](https://docs.docker.com/engine/
 
 **NOTA**: Na VPS de 2GB não é possível rodar o Docker Desktop
 
+### Instalar Redis via Docker
+
+1. Baixe a imagem do Redis do Docker Hub
+
+```
+docker pull redis
+```
+
+2. Crie um container com a imagem baixada
+
+```
+docker run -d -p 6379:6379 -i -t redis:latest redis-server
+```
+
+3. Verifique se o container está rodando
+
+```
+docker exec -it redis-server redis-cli
+```
+
+```
+ping
+```
+
+O retorno do **redis-cli** que roda dentro do container deve ser `PONG`
+
 ____
 
 Documentação baseada no README do projeto [restaurant-api](https://github.com/firestormapps/restaurant-api/blob/main/README.md)

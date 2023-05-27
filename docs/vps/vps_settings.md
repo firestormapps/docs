@@ -599,7 +599,7 @@ docker pull redis
 2. Crie um container com a imagem baixada
 
 ```
-docker run -d -p 6379:6379 -i -t redis:latest redis-server
+docker run --restart=always -d -p 6379:6379 --name redis-server -i -t redis:latest
 ```
 
 3. Verifique se o container está rodando

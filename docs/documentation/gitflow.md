@@ -12,8 +12,8 @@ Esse documento descreve nosso atual fluxo de branches e esteira de entrega no Gi
 Seguimos um fluxo de branches minimalista para não gerar muita complexidade e overhead. O fluxo é composto por 3 branches principais:
 
 - `main`: branch principal, contém o código em produção
-- `feature`: branch de feature, contém o código de uma feature em desenvolvimento
-- `bugfix`: branch de hotfix, contém o código de um hotfix em desenvolvimento
+- `feature`: branch de feature, contém o código de uma nova funcionalidade ou alteração em desenvolvimento
+- `bugfix`: branch de bugfix, contém o código de ajustes de bug em desenvolvimento
 
 ### Simulação de fluxo
 

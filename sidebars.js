@@ -3,6 +3,7 @@ module.exports = {
     'Documentação': [
       "documentation/doc1",
       "documentation/doc2",
+      "documentation/gitflow",
     ],
     Bibliotecas: [
       "libraries/firestormapps_utils",

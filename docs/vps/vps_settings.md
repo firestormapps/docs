@@ -494,6 +494,8 @@ pam_service_name=vsftpd
 rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
 ssl_enable=NO
+file_open_mode=0777
+local_umask=022
 ```
 
 7. Adicione o user `dev` aos usuários cuja pasta `/home` deve ser exposta ao FTP:

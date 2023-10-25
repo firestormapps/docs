@@ -1,15 +1,23 @@
 module.exports = {
   someSidebar: {
-    'Documentação': [
+    'Sobre esta Documentação': [
       "documentation/doc1",
       "documentation/doc2",
-      "documentation/gitflow",
+    ],
+    'Desenvolvimento': [
+      "development/gitflow",
+      "development/dev_env",
+    ],
+    'Loja na Net': [
+      "loja_na_net/platform",
+      "loja_na_net/platform_backend",
+      "loja_na_net/deployer",
     ],
     Bibliotecas: [
       "libraries/firestormapps_utils",
     ],
-    VPS: [
-      "vps/vps_settings",
+    Infraestrutura: [
+      "infra/vps_settings",
     ],
     Outros: ["others/bats"],
   },

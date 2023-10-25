@@ -1,6 +1,6 @@
 ---
 id: vps_settings
-title: Configurar Servidor VPS
+title: Como Configurar o VPS
 ---
 
 ## Antes de começar
@@ -115,7 +115,7 @@ sudo ufw status
 systemctl status nginx
 ```
 
-3.2. Crie a pasta de onde os arquivos da landing page serão servidos:
+3.2. (LEGADO) Crie a pasta de onde os arquivos da landing page serão servidos:
 
 ```
 sudo mkdir -p /var/www/firestormapps.com.br/html
@@ -125,9 +125,11 @@ sudo chown -R $USER:$USER /var/www/firestormapps.com.br/html
 sudo chmod -R 755 /var/www/firestormapps.com.br
 ```
 
-3.3. Coloque a [landing page](https://github.com/firestormapps/landing) no diretório `/var/www/firestormapps.com.br/html`
+3.3. (LEGADO) Coloque a [landing page](https://github.com/firestormapps/landing) no diretório `/var/www/firestormapps.com.br/html`
 
-3.4. Crie o arquivo de configuração do nginx
+3.4. Crie os arquivos de configuração do nginx para os domínios `firestormapps.com.br` e `lojana.net`:
+
+Crie o arquivo
 
 ```
 sudo nano /etc/nginx/sites-available/firestormapps.com.br
@@ -136,127 +138,173 @@ sudo nano /etc/nginx/sites-available/firestormapps.com.br
 Com o conteúdo
 
 ```
+server {
+	server_name www.firestormapps.com.br;
+
+	return 301 $scheme://firestormapps.com.br$request_uri;
+}
 
 server {
+	# root /var/www/firestormapps.com.br/html;
+	root /home/dev/git/landing;
 
-        server_name www.firestormapps.com.br;
+	index index.html index.htm index.nginx-debian.html;
 
-        return 301 $scheme://firestormapps.com.br$request_uri;
+	server_name firestormapps.com.br;
+}
+```
+e o arquivo
 
+```
+sudo nano /etc/nginx/sites-available/lojana.net
+```
 
-    listen [::]:443 ssl; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/firestormapps.com.br/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/firestormapps.com.br/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+Com o conteúdo
+
+```
+server {
+
+	server_name www.lojana.net;
+
+	return 301 $scheme://lojana.net$request_uri;
 }
 
 server {
 
-        root /var/www/firestormapps.com.br/html;
+	# root /var/www/lojana.net/html;
+	root /home/dev/git/landing;
 
-        index index.html index.htm index.nginx-debian.html;
+	index index.html index.htm index.nginx-debian.html;
 
-        server_name firestormapps.com.br;
+	server_name lojana.net;
 
-        location /template/_next/static {
-            alias /home/dev/git/ecommerce-next-template/frontend/.next/static;
-            add_header Cache-Control "public, max-age=3600, immutable";
-        }
+	#START_ECOMMERCE_BLOCK
 
-        location /template-backend {
+	#TEMPLATE_HOLDER
 
-         rewrite ^/template-backend/(.*)$ /$1 break;
+	#INIT_platform
+	location /platform/_next/static {
+		alias /home/dev/git/platform/frontend/.next/static;
+		add_header Cache-Control "public, max-age=3600, immutable";
+	}
 
-         proxy_pass http://127.0.0.1:8056;
+	location /platform-backend {
 
-         proxy_http_version 1.1;
+		rewrite ^/platform-backend/(.*)$ /$1 break;
 
-         proxy_set_header Upgrade $http_upgrade;
+		proxy_pass http://127.0.0.1:8099;
 
-         proxy_set_header Connection 'upgrade';
+		proxy_http_version 1.1;
 
-         proxy_set_header Host $host;
+		proxy_set_header Upgrade $http_upgrade;
 
-         proxy_cache_bypass $http_upgrade;
-        }
+		proxy_set_header Connection 'upgrade';
 
-        location /template {
+		proxy_set_header Host $host;
 
-         proxy_pass http://127.0.0.1:3001;
+		proxy_cache_bypass $http_upgrade;
+	}
 
-         proxy_http_version 1.1;
+	location /platform {
 
-         proxy_set_header Upgrade $http_upgrade;
+		proxy_pass http://127.0.0.1:3044;
 
-         proxy_set_header Connection 'upgrade';
+		proxy_http_version 1.1;
 
-         proxy_set_header Host $host;
+		proxy_set_header Upgrade $http_upgrade;
 
-         proxy_cache_bypass $http_upgrade;
-        }
+		proxy_set_header Connection 'upgrade';
 
-        location /fizumpanoporengano {
+		proxy_set_header Host $host;
 
-         rewrite ^/fizumpanoporengano/(.*)$ /$1 break;
+		proxy_cache_bypass $http_upgrade;
+	}
+	#END_platform
+	#INIT_template
+	location /template/_next/static {
+		alias /home/dev/git/template/frontend/.next/static;
+		add_header Cache-Control "public, max-age=3600, immutable";
+	}
 
-         proxy_pass http://127.0.0.1:8055;
+	location /template-backend {
 
-         proxy_http_version 1.1;
+		rewrite ^/template-backend/(.*)$ /$1 break;
 
-         proxy_set_header Upgrade $http_upgrade;
+		proxy_pass http://127.0.0.1:8098;
 
-         proxy_set_header Connection 'upgrade';
+		proxy_http_version 1.1;
 
-         proxy_set_header Host $host;
+		proxy_set_header Upgrade $http_upgrade;
 
-         proxy_cache_bypass $http_upgrade;
-        }
+		proxy_set_header Connection 'upgrade';
 
-    listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/firestormapps.com.br/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/firestormapps.com.br/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-}
+		proxy_set_header Host $host;
 
-server {
-    if ($host = firestormapps.com.br) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
+		proxy_cache_bypass $http_upgrade;
+	}
 
+	location /template {
 
+		proxy_pass http://127.0.0.1:3043;
 
-        listen 80;
+		proxy_http_version 1.1;
 
-        listen [::]:80;
+		proxy_set_header Upgrade $http_upgrade;
 
-        server_name firestormapps.com.br;
-    return 404; # managed by Certbot
+		proxy_set_header Connection 'upgrade';
 
+		proxy_set_header Host $host;
 
-}
+		proxy_cache_bypass $http_upgrade;
+	}
+	#END_template
 
-server {
-    if ($host = www.firestormapps.com.br) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
+	#FINISH_ECOMMERCE_BLOCK
 
-        listen 80;
+	location /dpr {
 
-        listen [::]:80;
+		rewrite ^/dpr/(.*)$ /$1 break;
 
-        server_name www.firestormapps.com.br;
-    return 404; # managed by Certbot
+		proxy_pass http://127.0.0.1:5505;
+
+		proxy_http_version 1.1;
+
+		proxy_set_header Upgrade $http_upgrade;
+
+		proxy_set_header Connection 'upgrade';
+
+		proxy_set_header Host $host;
+
+		proxy_cache_bypass $http_upgrade;
+	}
+
+	location /fizumpanoporengano {
+
+		rewrite ^/fizumpanoporengano/(.*)$ /$1 break;
+
+		proxy_pass http://127.0.0.1:8055;
+
+		proxy_http_version 1.1;
+
+		proxy_set_header Upgrade $http_upgrade;
+
+		proxy_set_header Connection 'upgrade';
+
+		proxy_set_header Host $host;
+
+		proxy_cache_bypass $http_upgrade;
+	}
 }
 ```
 
-3.5. Crie um link para o arquivo
+3.5. Crie um link para cada um dos arquivos na pasta `sites-enabled`:
 
 ```
 sudo ln -s /etc/nginx/sites-available/firestormapps.com.br /etc/nginx/sites-enabled/
+```
+
+```
+sudo ln -s /etc/nginx/sites-available/lojana.net /etc/nginx/sites-enabled/
 ```
 
 3.6. Descomente a diretiva #server_names_hash_bucket_size, tirando o #
@@ -287,7 +335,7 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-4. Substitua o Apache pelo Nginx
+1. Substitua o Apache pelo Nginx
 
 Caso ocorra alguma erro para iniciar o nginx no Ubuntu 20.04, possivelmente é porque o Apache está utilizando a porta 80
 Para resolver, basta desabilitar (NÃO REMOVER) o Apache: https://www.cyberciti.biz/faq/how-do-i-stop-apache-from-starting-on-linux/
@@ -358,7 +406,7 @@ sudo ufw delete allow 'Nginx HTTP'
 3. Obtenha o certificado Let's Encrypt via cert bot
 
 ```
-sudo certbot --nginx -d firestormapps.com.br -d www.firestormapps.com.br
+sudo certbot --nginx -d firestormapps.com.br -d www.firestormapps.com.br -d lojana.net -d www.lojana.net
 ```
 
 4. Entre com o e-mail do responsável

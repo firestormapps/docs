@@ -664,6 +664,34 @@ ping
 
 O retorno do **redis-cli** que roda dentro do container deve ser `PONG`
 
+#### Configurar gerenciamento de memoria para funcionar com BullMQ
+
+Para que o BullMQ funcione corretamente, é necessário configurar o Redis para que ele não remova os dados da memória quando a mesma estiver cheia. Para mais informações, veja a [documentação oficial do BullMQ](https://docs.bullmq.io/guide/going-to-production#max-memory-policy).
+
+1. Acesse o container
+
+```bash
+docker exec -it redis-server bash
+```
+
+2. Acesse a CLI do Redis
+
+```bash
+redis-cli
+```
+
+3. Configure o Redis para gerenciar a memória de maneira correta
+
+```bash
+CONFIG SET maxmemory-policy noeviction
+```
+
+:::tip
+
+**Dica**: O comando retornará `OK` quando a configuração for aplicada corretamente.
+
+:::
+
 ____
 
 Documentação baseada no README do projeto [restaurant-api](https://github.com/firestormapps/restaurant-api/blob/main/README.md)

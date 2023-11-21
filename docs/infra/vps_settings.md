@@ -664,7 +664,7 @@ ping
 
 O retorno do **redis-cli** que roda dentro do container deve ser `PONG`
 
-#### Configurar gerenciamento de memoria para funcionar com BullMQ
+### Configurar gerenciamento de memoria para funcionar com BullMQ
 
 Para que o BullMQ funcione corretamente, é necessário configurar o Redis para que ele não remova os dados da memória quando a mesma estiver cheia. Para mais informações, veja a [documentação oficial do BullMQ](https://docs.bullmq.io/guide/going-to-production#max-memory-policy).
 

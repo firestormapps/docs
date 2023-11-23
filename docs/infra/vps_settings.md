@@ -96,7 +96,7 @@ sudo apt update
 2. Instale o Nginx
 
 ```
-sudo apt install nginx
+sudo apt install nginx --assume-yes
 ```
 
 3. Crie os arquivos de configuração do nginx
@@ -393,7 +393,7 @@ sudo chown -R dev:dev /etc/nginx/sites-available
 1. Instalar as dependências do cert bot
 
 ```
-sudo apt install certbot python3-certbot-nginx
+sudo apt install certbot python3-certbot-nginx --assume-yes
 ```
 
 2. Habilite o tráfego HTTPS no nginx
@@ -493,7 +493,7 @@ sudo apt update
 2. Instale o `vsftpd`
 
 ```
-sudo apt install vsftpd
+sudo apt install vsftpd --assume-yes
 ```
 
 3. Inicie o serviço
@@ -636,7 +636,9 @@ Mais detalhes no link: https://tecadmin.net/how-to-install-xrdp-on-ubuntu-20-04/
 
 Siga as instruções da [documentação oficial](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) para instalação do Docker Engine.
 
-**NOTA**: Na VPS de 2GB não é possível rodar o Docker Desktop
+**NOTA 1**: Na VPS de 2GB não é possível rodar o Docker Desktop
+
+**NOTA 2**: Para executar o Docker **sem sudo**, siga os passos descritos [aqui](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
 ### Instalar Redis via Docker
 
